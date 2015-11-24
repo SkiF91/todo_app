@@ -168,3 +168,7 @@ table.todos-list tr:last-child {
   float: left;
   margin-right: 5px;
 }
+#top-menu ul li.R {
+  float: right;
+  margin-right: 0;
+}

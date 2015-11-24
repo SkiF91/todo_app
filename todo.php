@@ -43,9 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   exit;
 }
 
-$items = $todo ? CustomVars::$DB->find_todo_items_by_id($name, $todo->id) : null;
+$items = $todo ? CustomVars::$DB->find_todo_items_by_id($todo->id) : null;
 
 ViewTemplate::$title = "todos &mdash; " . ($todo ? $todo->name : 'New ToDo');
-ViewTemplate::$head = '<link rel="stylesheet" media="all" href="/css/todo.css"><script src="/js/todo.js"></script>';
+ViewTemplate::$head = 'views/todo_head.php';
 ViewTemplate::$body = 'views/todo_view.php';
 include "views/layout.php";

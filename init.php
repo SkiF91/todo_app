@@ -68,7 +68,7 @@ function render_paginator($data) {
   $max_page = ceil($data['count'] / 10);
 
   $page = $data['page'] > $max_page ? $max_page : $data['page'];
-
+  if ($max_page == 0) { return null; }
   $totals = '(' . ((($page - 1) * 10) + 1) . ' &mdash; ' . ($page * 10 > $data['count'] ? $data['count'] : $page * 10) . '/' . $data['count'] . ')';
   if ($max_page == 1) { return $totals; }
   $html = '';
@@ -108,6 +108,7 @@ function render_menu() {
   if (!CustomVars::$current_user) { return null; }
   $html = '<div id="top-menu" class="content-center"><ul>';
   $html .= '<li><a href="/todo.php" class="fa fa-plus-circle"><span>Добавить</span></a></li>';
-  $html .= '<li><a href="/logout.php" class="fa fa-sign-out" data-confirm="Вы уверены ?"><span>Выйти</span></a></li>';
+  $html .= '<li><a href="/" class="fa fa-bars"><span>Список</span></a></li>';
+  $html .= '<li class="R"><a href="/logout.php" class="fa fa-sign-out" data-confirm="Вы уверены ?"><span>Выйти</span></a></li>';
   return $html . '</ul></div>';
 }
