@@ -103,3 +103,11 @@ function render_paginator($data) {
   }
   return "<div class='paginator'>$html <span class='pg-totals'>$totals</span></div>";
 }
+
+function render_menu() {
+  if (!CustomVars::$current_user) { return null; }
+  $html = '<div id="top-menu"><ul>';
+  $html .= '<li><a href="/todo.php" class="fa fa-plus-circle"><span>Добавить</span></a></li>';
+  $html .= '<li><a href="/logout.php" class="fa fa-sign-out"><span>Выйти</span></a></li>';
+  return $html . '</ul></div>';
+}

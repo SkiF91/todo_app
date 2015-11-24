@@ -23,7 +23,9 @@ a {
   border-bottom: 1px solid #0099CC;
   text-decoration: none;
 }
-
+a:hover {
+  color: #27c9cc;
+}
 form {
   margin: 0;
 }
@@ -109,6 +111,7 @@ a.fa {
 a.fa span {
   border-bottom: 1px solid #0099CC;
   margin-left: 3px;
+  font-family: Arial, sans-serif;
 }
 a.del {
   color: #BD0000;
@@ -143,4 +146,26 @@ table.todos-list tr:last-child {
 .paginator .pg-sel {
   font-weight: bold;
   border-bottom: none;
+}
+#top-menu {
+  max-width: 350px;
+  width: 100%;
+  margin: auto;
+  background-color: #fff;
+  padding: 5px;
+  overflow: hidden;
+
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.07) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.07) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.07) inset;
+}
+#top-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#top-menu ul li {
+  list-style-type: none;
+  float: left;
+  margin-right: 5px;
 }

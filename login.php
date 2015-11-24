@@ -13,7 +13,7 @@ const LOGIN_SUCCESS = 1;
 const LOGIN_FAIL = 0;
 
 
-if (strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $res = try_login();
   if ($res == LOGIN_SUCCESS) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');

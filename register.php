@@ -6,7 +6,7 @@ if (CustomVars::$current_user) {
   exit;
 }
 
-if (strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $res = try_register();
   if (!$res) {
     CustomVars::$SESSION->flash->error = 'Unknown error occurred';

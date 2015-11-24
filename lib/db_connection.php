@@ -61,4 +61,17 @@
       $st->execute([$user_id]);
       return ['rows' => $st, 'offset' => $offset, 'page' => $page, 'count' => $count];
     }
+
+    function find_todo_by_id($id) {
+      $st = $this->connection->prepare('SELECT * FROM todos WHERE id = ? LIMIT 1');
+      $st->execute([$id]);
+      $row = $st->fetch();
+      if (!$row) { return false; }
+      return $row;
+    }
+
+    function delete_todo_by_id($id) {
+      $st = $this->connection->prepare('DELETE FROM todos WHERE id = ?');
+      return $st->execute([$id]);
+    }
   }
