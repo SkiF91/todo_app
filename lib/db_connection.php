@@ -75,9 +75,15 @@
       return $st->execute([$id]);
     }
 
-    function update_todo_by_id($name, $id) {
-      $st = $this->connection->prepare('UPDATE todos SET name = ? WHERE id = ?');
-      return $st->execute([$name, $id]);
+    function create_or_update_todo($name, $todo, $user) {
+      if ($todo) {
+        $st = $this->connection->prepare('UPDATE todos SET name = ? WHERE id = ? AND user_id = ?');
+        $st->execute([$name, $todo->id, $user->id]);
+        return $todo->id;
+      }
+      $st = $this->connection->prepare('INSERT INTO todos (name, user_id) VALUES (?, ?)');
+      $st->execute([$name, $user->id]);
+      return $this->connection->lastInsertId();
     }
 
     function find_todo_items_by_id($id) {
