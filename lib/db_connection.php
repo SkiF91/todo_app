@@ -74,4 +74,15 @@
       $st = $this->connection->prepare('DELETE FROM todos WHERE id = ?');
       return $st->execute([$id]);
     }
+
+    function update_todo_by_id($name, $id) {
+      $st = $this->connection->prepare('UPDATE todos SET name = ? WHERE id = ?');
+      return $st->execute([$name, $id]);
+    }
+
+    function find_todo_items_by_id($id) {
+      $st = $this->connection->prepare('SELECT * FROM todo_items WHERE todo_id = ? LIMIT 1');
+      $st->execute([$id]);
+      return $st;
+    }
   }

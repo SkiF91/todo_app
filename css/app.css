@@ -29,6 +29,11 @@ a:hover {
 form {
   margin: 0;
 }
+.content-center {
+  max-width: 350px;
+  width: 100%;
+  margin: auto;
+}
 h1.main-header {
   width: 100%;
   color:  rgba(175, 47, 47, 0.15);
@@ -42,9 +47,6 @@ h1.main-header {
   padding: 15px;
   border-radius: 4px;
   box-sizing: border-box;
-  max-width: 350px;
-  width: 100%;
-  margin: auto;
 
   box-shadow: 0 5px 5px -6px #000101;
   -webkit-box-shadow: 0 5px 5px -6px #000101;
@@ -148,9 +150,6 @@ table.todos-list tr:last-child {
   border-bottom: none;
 }
 #top-menu {
-  max-width: 350px;
-  width: 100%;
-  margin: auto;
   background-color: #fff;
   padding: 5px;
   overflow: hidden;

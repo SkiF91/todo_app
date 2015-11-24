@@ -16,7 +16,7 @@ if ($todo && CustomVars::$current_user->id != $todo->user_id) {
   exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['_method'] == 'delete') {
+if ($_SERVER['REQUEST_METHOD'] == 'DELETE' || ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['_method'] == 'delete')) {
   CustomVars::$DB->delete_todo_by_id($todo->id);
   $page = isset($_GET['page']) ? $_GET['page'] : 1;
   header('Location: http://' . $_SERVER['HTTP_HOST'] . '/?page=' . $page);
@@ -24,5 +24,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['_method']) && $_POST['
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+  if (!$todo) {
+    CustomVars::$SESSION->flash->error = 'Список не найден';
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/');
+    exit;
+  }
+  $name = isset($_POST['name']) ? $_POST['name'] : '';
+  if ($name) {
+    CustomVars::$DB->update_todo_by_id($name, $todo->id);
+  }
+  echo "<script>alert('okkkk');</script>";
+  exit;
 }
+
+$items = $todo ? CustomVars::$DB->find_todo_items_by_id($name, $todo->id) : null;
+
+ViewTemplate::$title = "todos &mdash; " . ($todo ? $todo->name : 'New ToDo');
+ViewTemplate::$head = '<link rel="stylesheet" media="all" href="/css/todo.css"><script src="/js/todo.js"></script>';
+ViewTemplate::$body = 'views/todo_view.php';
+include "views/layout.php";

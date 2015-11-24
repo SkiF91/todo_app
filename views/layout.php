@@ -6,11 +6,11 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title><?php if(isset(ViewTemplate::$title)) { echo ViewTemplate::$title; } ?></title>
-    <?php if(isset(ViewTemplate::$head)) { include ViewTemplate::$head; } ?>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <link rel="stylesheet" media="all" href="/css/app.css">
     <script src="/js/app.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <?php if(isset(ViewTemplate::$head)) { include ViewTemplate::$head; } ?>
   </head>
   <body>
     <div id="wrapper">

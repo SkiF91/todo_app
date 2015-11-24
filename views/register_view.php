@@ -1,4 +1,4 @@
-<div class="main-block">
+<div class="main-block content-center">
   <?php echo render_flashes(); ?>
 
   <form action="/register.php" method="post">

@@ -14,7 +14,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $data = CustomVars::$DB->paginated_todos(CustomVars::$current_user->id, $page);
 ?>
 
-<div class="main-block">
+<div class="main-block content-center">
   <?= render_flashes(); ?>
   <div class="autoscroll">
     <?php
@@ -24,7 +24,7 @@ $data = CustomVars::$DB->paginated_todos(CustomVars::$current_user->id, $page);
       echo '<table class="todos-list">';
       foreach($data['rows'] as $row) {
         echo '<tr>';
-        echo "<td><a href='/todos.php?id=$row->id'>$row->name</a></td><td><a href='/todo.php?id=$row->id&page=$page' data-method='delete' class='fa fa-close del' title='Удалить'></a></td>";
+        echo "<td id='td-$row->id'><a href='/todo.php?id=$row->id'>$row->name</a></td><td><a href='/todo.php?id=$row->id&page=$page' data-remote='true' data-method='delete' class='fa fa-close del' title='Удалить'></a></td>";
         echo '</tr>';
       }
       echo '</table>';
