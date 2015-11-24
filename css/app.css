@@ -1,0 +1,146 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  background-color: #f5f5f5;
+  margin: 0;
+}
+p {
+  margin: 10px 0;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+table td {
+  padding: 2px;
+}
+input[type="text"],
+input[type="password"] {
+  padding: 5px;
+}
+a {
+  color: #0099CC;
+  border-bottom: 1px solid #0099CC;
+  text-decoration: none;
+}
+
+form {
+  margin: 0;
+}
+h1.main-header {
+  width: 100%;
+  color:  rgba(175, 47, 47, 0.15);
+  text-align: center;
+  font-size: 100px;
+  font-weight: 100;
+}
+.main-block {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  max-width: 350px;
+  width: 100%;
+  margin: auto;
+
+  box-shadow: 0 5px 5px -6px #000101;
+  -webkit-box-shadow: 0 5px 5px -6px #000101;
+  -moz-box-shadow: 0 5px 5px -6px #000101;
+  overflow: hidden;
+}
+.main-block input[type="text"],
+.main-block input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+.main-block p:first-child {
+  margin-top: 0;
+}
+.main-block p:last-child {
+  margin-bottom: 0;
+}
+.L {
+  float: left;
+}
+.R {
+  float: right;
+}
+.H {
+  overflow: hidden;
+}
+.text-middle {
+  vertical-align: middle;
+}
+.flash {
+  font-size: 11pt;
+  font-weight: normal;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.error {
+  color: #BD0000;
+  border-color: #EA6363;
+  background-color: #FFDCDC;
+}
+.notice {
+  background-color: #DDFFDE;
+  color: #116311;
+  border-color: #2FDC1A;
+}
+.nodata {
+  font-size: 11pt;
+  font-weight: normal;
+  border: 1px solid #FF720E;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #FFDCB8;
+  color: #B55500;
+}
+.main-block .nodata:last-child {
+  margin-bottom: 0;
+}
+a.fa {
+  border-bottom: none;
+}
+a.fa span {
+  border-bottom: 1px solid #0099CC;
+  margin-left: 3px;
+}
+a.del {
+  color: #BD0000;
+}
+table.todos-list {
+  width: 100%
+}
+table.todos-list td {
+  padding: 5px 0;
+}
+table.todos-list td:last-child {
+  width: 1%;
+}
+table.todos-list tr {
+  border-bottom: 1px solid #ccc;
+}
+table.todos-list tr:last-child {
+  border-bottom: none;
+}
+.autoscroll {
+  overflow: auto;
+  max-height: 500px;
+}
+.paginator {
+  margin-top: 5px;
+  float:right;
+}
+.paginator a,
+.paginator span.pg-sel {
+  margin-right: 5px;
+}
+.paginator .pg-sel {
+  font-weight: bold;
+  border-bottom: none;
+}
