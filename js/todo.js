@@ -111,6 +111,7 @@
       if (this.check_value(vl)) {
         $target.find('.view label').html(vl);
       } else {
+        alert('Bad idea');
         e.target.value = $target.find('.view label').text();
       }
 
