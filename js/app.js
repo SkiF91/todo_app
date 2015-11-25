@@ -15,9 +15,10 @@ $(document).ready(function() {
     $.ajax({ type: method, url: this.href });
     return false;
   });
-  $(document.body).on('click', 'form[data-remote]', function() {
-    var method = this.getAttribute('method') || 'get';
-    $.ajax({ type: method, url: this.action, data: $(this).serialize() });
+  $(document.body).on('click', 'form[data-remote] input[type=submit]', function() {
+    var $form = $(this).closest('form');
+    var method = $form.attr('method') || 'get';
+    $.ajax({ type: method, url: this.action, data: $form.serialize() });
     return false;
   });
 
@@ -34,7 +35,7 @@ $(document).ready(function() {
   $(document).ajaxStart(function() {
     obj = $(document.body).data('ajax_emmiter');
     if (obj) {
-      obj.after('<div class="fa fa-cog fa-spin loader" style="width: ' + obj.outerWidth().toString() + 'px; height: ' + obj.outerHeight().toString() + 'px;"></div>');
+      obj.after('<div class="fa fa-cog fa-spin loader" ></div>');
       obj.addClass('ajax_hidden_emmiter');
       obj.hide();
     }

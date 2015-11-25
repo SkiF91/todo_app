@@ -1,65 +1,63 @@
-<div class="content-center" style="max-width: 600px;">
-  <?= render_flashes(); ?>
-  <form action="/todo.php?id=<?= $todo ? $todo->id : '' ?>" method="post">
+<form action="/todo.php?id=<?= $todo ? $todo->id : '' ?>" method="post"<?= $todo ? ' data-remote="true"' : ''?>>
+  <div class="content-center" style="max-width: 600px;">
+    <?= render_flashes(); ?>
     <p>
       <input type="text" name="name" value="<?= $todo ? $todo->name : '' ?>" placeholder="Введите имя списка">
       <input type="submit" value="<?= $todo ? 'Сохранить' : 'Создать' ?>">
     </p>
-  </form>
-</div>
+  </div>
+
 
 <?php
-if (!$todo) { exit; }
+if (!$todo) {
+  echo '</form>';
+  exit;
+}
 ?>
 
-<section class="todoapp">
-  <header class="header">
-    <input class="new-todo" placeholder="Чего, собственно, будем делать то ?" autofocus>
-  </header>
-  <!-- This section should be hidden by default and shown when there are todos -->
-  <section class="main">
-    <input class="toggle-all" type="checkbox">
-    <ul class="todo-list">
-      <!-- These are here just to show the structure of the list items -->
-      <!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
-      <li class="completed">
-        <div class="view">
-          <input class="toggle" type="checkbox" checked>
-          <label>Taste JavaScript</label>
-          <button class="destroy"></button>
-        </div>
-        <input class="edit" value="Create a TodoMVC template">
-      </li>
-      <li>
-        <div class="view">
-          <input class="toggle" type="checkbox">
-          <label>Buy a unicorn</label>
-          <button class="destroy"></button>
-        </div>
-        <input class="edit" value="Rule the web">
-      </li>
-    </ul>
+  <section class="todoapp">
+    <header class="header">
+      <input class="new-todo" placeholder="Чего, собственно, будем делать то ?" autofocus>
+    </header>
+    <section class="main">
+      <input class="toggle-all" type="checkbox">
+      <ul class="todo-list">
+        <!-- better to load via json, but.... -->
+        <?php
+          if ($items) {
+            foreach ($items as $row) {
+              echo '<li' . ($row->completed == 1 ? ' class="completed"' : '') . '>';
+              echo '<div class="view">';
+              echo '<input class="toggle" type="hidden" value="0" name="items[][completed]">';
+              echo '<input class="toggle" type="checkbox" ' . ($row->completed == 1 ? 'checked' : '') . ' name="items[][completed]">';
+              echo "<label>$row->name</label>";
+              echo '<button class="destroy"></button>';
+              echo '</div>';
+              echo '<input class="edit" value="' . $row->name . '" name="items[][name]">';
+              echo '</li>';
+            }
+          }
+        ?>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <span class="todo-count"><strong>0</strong> осталось</span>
+      <ul class="filters">
+        <li>
+          <a class="selected" href="#" data-type="all">Все</a>
+        </li>
+        <li>
+          <a href="#" data-type="active">Активные</a>
+        </li>
+        <li>
+          <a href="#" data-type="completed">Завершенные</a>
+        </li>
+      </ul>
+      <button class="clear-completed">Удалить завершенные</button>
+    </footer>
   </section>
-  <!-- This footer should hidden by default and shown when there are todos -->
-  <footer class="footer">
-    <!-- This should be `0 items left` by default -->
-    <span class="todo-count"><strong>0</strong> осталось</span>
-    <!-- Remove this if you don't implement routing -->
-    <ul class="filters">
-      <li>
-        <a class="selected" href="#" data-type="all">Все</a>
-      </li>
-      <li>
-        <a href="#" data-type="active">Активные</a>
-      </li>
-      <li>
-        <a href="#" data-type="completed">Завершенные</a>
-      </li>
-    </ul>
-    <!-- Hidden if no completed items are left ↓ -->
-    <button class="clear-completed">Удалить завершенные</button>
-  </footer>
-</section>
+</form>
 
 <script type="text/javascript">
   $(document).ready(function() {

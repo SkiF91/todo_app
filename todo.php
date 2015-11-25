@@ -31,12 +31,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'DELETE' || ($_SERVER['REQUEST_METHOD'] == 'PO
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $name = isset($_POST['name']) ? $_POST['name'] : '';
+
   if (!preg_match('/^[a-zA-Z0-9\x{0430}-\x{044F}\x{0410}-\x{042F}\s]{3,50}$/u', $name)) {
+    if (is_ajax()) {
+      header("Content-Type: application/javascript");
+      echo 'alert("Имя должно состоять только из букв и цифр и должно быть не короче 3 и не длиньше 50 символов");';
+      exit;
+    }
     CustomVars::$SESSION->flash->error = 'Имя должно состоять только из букв и цифр и должно быть не короче 3 и не длиньше 50 символов';
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/todo.php?id=' . $id);
     exit;
   }
-  $todo_id = CustomVars::$DB->create_or_update_todo($name, $todo, CustomVars::$current_user);
+  $items = isset($_POST['items']) && $_POST['items'] ? $_POST['items'] : null;
+  $todo_id = CustomVars::$DB->create_or_update_todo($name, $todo, $items, CustomVars::$current_user);
+  if (is_array($items)) {
+    if (is_ajax()) {
+      echo 'alert(' . join('<br>', $items) . ');';
+      exit;
+    }
+    CustomVars::$SESSION->flash->error = array_to_li($items);
+  }
   // ajax better.... but....
   header('Location: http://' . $_SERVER['HTTP_HOST'] . '/todo.php?id=' . $todo_id);
 

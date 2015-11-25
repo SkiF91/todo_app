@@ -113,3 +113,7 @@ function render_menu() {
   $html .= '<li class="R">' . CustomVars::$current_user->login . '</li>';
   return $html . '</ul></div>';
 }
+
+function is_ajax() {
+  return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+}

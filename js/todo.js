@@ -23,7 +23,7 @@
     constructor: todo,
     listen: function() {
       this.$toggle_all.on('change', $.proxy(this.toggle_all, this));
-      this.$new_todo.on('keyup', $.proxy(this.new_keyup, this));
+      this.$new_todo.on('keypress', $.proxy(this.new_keyup, this));
       this.$todo_list.on('change', '.toggle',  $.proxy(this.item_toggle, this))
                      .on('click',  '.destroy', $.proxy(this.destroy_click, this));
       this.$clear_completed.on('click', $.proxy(this.clear_completed_click, this));
@@ -47,6 +47,8 @@
       } else if (e.keyCode == 13) {
         this.build_item(e.target.value);
         e.target.value = '';
+        e.stopPropagation();
+        e.preventDefault();
       }
     },
     item_toggle: function(e) {
