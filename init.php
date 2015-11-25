@@ -110,5 +110,6 @@ function render_menu() {
   $html .= '<li><a href="/todo.php" class="fa fa-plus-circle"><span>Добавить</span></a></li>';
   $html .= '<li><a href="/" class="fa fa-bars"><span>Список</span></a></li>';
   $html .= '<li class="R"><a href="/logout.php" class="fa fa-sign-out" data-confirm="Вы уверены ?"><span>Выйти</span></a></li>';
+  $html .= '<li class="R">' . CustomVars::$current_user->login . '</li>';
   return $html . '</ul></div>';
 }
