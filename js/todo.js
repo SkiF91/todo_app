@@ -2,6 +2,7 @@
   "use strict"; // jshint ;_;
 
   var todo = function(element, options) {
+    this.initialized = false;
     this.$element = $(element);
     this.$toggle_all = this.$element.find('.toggle-all');
     this.$new_todo = this.$element.find('.new-todo');
@@ -15,8 +16,10 @@
     this.set_complete_relations();
     this.listen();
     this.current_filter = 'all';
+    this.timeout = undefined;
 
     this.$todo_list.find('li .toggle:checked').trigger('change');
+    this.initialized = true;
   };
 
   todo.prototype = {
@@ -43,6 +46,7 @@
         this.items_left = this.items;
       }
       this.set_complete_relations();
+      this.save();
     },
     new_keypress: function(e) {
       if (e.keyCode == 9) {
@@ -59,6 +63,7 @@
         e.target.value = '';
         e.stopPropagation();
         e.preventDefault();
+        this.save();
       }
     },
     item_toggle: function(e) {
@@ -70,6 +75,7 @@
         this.items_left ++;
       }
       this.set_complete_relations();
+      this.save();
     },
     destroy_click: function(e) {
       var $li = $(e.target).closest('li');
@@ -80,6 +86,7 @@
       }
       this.items --;
       this.set_complete_relations();
+      this.save();
     },
     clear_completed_click: function(e) {
       this.$todo_list.find('li.completed .destroy').trigger('click');
@@ -110,6 +117,7 @@
       if (!vl) { return; }
       if (this.check_value(vl)) {
         $target.find('.view label').html(vl);
+        this.save();
       } else {
         alert('Bad idea');
         e.target.value = $target.find('.view label').text();
@@ -151,6 +159,16 @@
     check_value: function(value) {
       var patt = /^[a-zA-Z0-9а-яА-Я\s]{3,50}$/g;
       return patt.test(value);
+    },
+    save: function() {
+      if (!this.initialized) { return; }
+      if (this.timeout) {
+        window.clearTimeout(this.timeout);
+      }
+      this.timeout = window.setTimeout($.proxy(this.real_save, this), 300);
+    },
+    real_save: function() {
+      this.$element.closest('form').find('input[type=submit]').trigger('click');
     }
   };
 

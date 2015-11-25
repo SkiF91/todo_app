@@ -30,7 +30,7 @@ if (!$todo) {
               echo '<li' . ($row->completed == 1 ? ' class="completed"' : '') . '>';
               echo '<div class="view">';
               echo '<input class="toggle" type="hidden" value="0" name="items[' . $ind . '][completed]">';
-              echo '<input class="toggle" type="checkbox" ' . ($row->completed == 1 ? 'checked' : '') . ' name="items[' . $ind . '][completed]">';
+              echo '<input class="toggle" type="checkbox" value="1" ' . ($row->completed == 1 ? 'checked' : '') . ' name="items[' . $ind . '][completed]">';
               echo "<label>$row->name</label>";
               echo '<button class="destroy"></button>';
               echo '</div>';
