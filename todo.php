@@ -44,15 +44,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   }
   $items = isset($_POST['items']) && $_POST['items'] ? $_POST['items'] : null;
   $todo_id = CustomVars::$DB->create_or_update_todo($name, $todo, $items, CustomVars::$current_user);
-  if (is_array($items)) {
+  if (is_array($todo_id)) {
     if (is_ajax()) {
-      echo 'alert(' . join('<br>', $items) . ');';
+      header("Content-Type: application/javascript");
+      echo 'alert(' . join('<br>', $todo_id) . ');';
       exit;
     }
     CustomVars::$SESSION->flash->error = array_to_li($items);
   }
-  // ajax better.... but....
-  header('Location: http://' . $_SERVER['HTTP_HOST'] . '/todo.php?id=' . $todo_id);
+  if (!is_ajax()) {
+    // ajax better.... but....
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/todo.php?id=' . $todo_id);
+  }
 
   exit;
 }

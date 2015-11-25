@@ -127,12 +127,12 @@
       if (!name) { return; }
       var html = '<li' + (this.current_filter == 'completed' ? ' class="hidden"' : '') + '>';
       html += '<div class="view">';
-      html += '<input class="toggle" type="hidden" value="0" name="items[][completed]">';
-      html += '<input class="toggle" type="checkbox" value="1" name="items[][completed]">';
+      html += '<input class="toggle" type="hidden" value="0" name="items[' + this.items + '][completed]">';
+      html += '<input class="toggle" type="checkbox" value="1" name="items[' + this.items + '][completed]">';
       html += '<label>' + name + '</label>';
       html += '<button class="destroy"></button>';
       html += '</div>';
-      html += '<input class="edit" value="' + name + '" name="items[][name]">';
+      html += '<input class="edit" value="' + name + '" name="items[' + this.items + '][name]">';
       html += '</li>';
       this.$todo_list.prepend(html);
       this.items ++;

@@ -25,16 +25,18 @@ if (!$todo) {
         <!-- better to load via json, but.... -->
         <?php
           if ($items) {
+            $ind = 0;
             foreach ($items as $row) {
               echo '<li' . ($row->completed == 1 ? ' class="completed"' : '') . '>';
               echo '<div class="view">';
-              echo '<input class="toggle" type="hidden" value="0" name="items[][completed]">';
-              echo '<input class="toggle" type="checkbox" ' . ($row->completed == 1 ? 'checked' : '') . ' name="items[][completed]">';
+              echo '<input class="toggle" type="hidden" value="0" name="items[' . $ind . '][completed]">';
+              echo '<input class="toggle" type="checkbox" ' . ($row->completed == 1 ? 'checked' : '') . ' name="items[' . $ind . '][completed]">';
               echo "<label>$row->name</label>";
               echo '<button class="destroy"></button>';
               echo '</div>';
-              echo '<input class="edit" value="' . $row->name . '" name="items[][name]">';
+              echo '<input class="edit" value="' . $row->name . '" name="items[' . $ind . '][name]">';
               echo '</li>';
+              $ind ++;
             }
           }
         ?>

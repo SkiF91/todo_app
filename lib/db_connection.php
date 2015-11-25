@@ -75,10 +75,33 @@
       return $st->execute([$id]);
     }
 
-    function create_or_update_todo($name, $todo, $user) {
+    /// hmm, transaction... hmmm, NOOOOO, lets hardcore!!! we are strong!
+    function create_or_update_todo($name, $todo, $items, $user) {
+      if ($items) {
+        foreach($items as $it) {
+          if (!isset($it['name']) || !$it['name'] || !preg_match('/^[a-zA-Z0-9\x{0430}-\x{044F}\x{0410}-\x{042F}\s]{3,50}$/u', $it['name'])) {
+            return ['Имя должно состоять только из букв и цифр и должно быть не короче 3 и не длиньше 50 символов', var_dump($items)];
+          }
+        }
+      }
       if ($todo) {
-        $st = $this->connection->prepare('UPDATE todos SET name = ? WHERE id = ? AND user_id = ?');
-        $st->execute([$name, $todo->id, $user->id]);
+        $st = $this->connection->prepare('UPDATE todos SET name = ? WHERE id = ?');
+        $st->execute([$name, $todo->id]);
+        $st = $this->connection->prepare('DELETE FROM todo_items WHERE todo_id = ?');
+        $st->execute([$todo->id]);
+
+        if ($items) {
+          $sql = [];
+          $params = [];
+          foreach ($items as $it) {
+            $params[] = $it['name'];
+            $params[] = $todo->id;
+            $params[] = $it['completed'];
+            $sql[] = ' (?, ?, ?)';
+          }
+          $st = $this->connection->prepare('INSERT INTO todo_items (name, todo_id, completed) VALUES ' . join(',', $sql));
+          $st->execute($params);
+        }
         return $todo->id;
       }
       $st = $this->connection->prepare('INSERT INTO todos (name, user_id) VALUES (?, ?)');
@@ -87,7 +110,7 @@
     }
 
     function find_todo_items_by_id($id) {
-      $st = $this->connection->prepare('SELECT * FROM todo_items WHERE todo_id = ? LIMIT 1');
+      $st = $this->connection->prepare('SELECT * FROM todo_items WHERE todo_id = ?');
       $st->execute([$id]);
       return $st;
     }
