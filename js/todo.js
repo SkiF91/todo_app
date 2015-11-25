@@ -23,11 +23,14 @@
     constructor: todo,
     listen: function() {
       this.$toggle_all.on('change', $.proxy(this.toggle_all, this));
-      this.$new_todo.on('keypress', $.proxy(this.new_keyup, this));
+      this.$new_todo.on('keypress', $.proxy(this.new_keypress, this));
       this.$todo_list.on('change', '.toggle',  $.proxy(this.item_toggle, this))
                      .on('click',  '.destroy', $.proxy(this.destroy_click, this));
       this.$clear_completed.on('click', $.proxy(this.clear_completed_click, this));
       this.$element.on('click', '.filters li a', $.proxy(this.filter, this));
+      this.$todo_list.on('dblclick', 'li', $.proxy(this.dblclick, this));
+      this.$todo_list.on('focusout', '.edit', $.proxy(this.edit_out, this));
+      this.$todo_list.on('keypress', '.edit', $.proxy(this.edit_out, this));
     },
 
     toggle_all: function(e) {
@@ -41,10 +44,17 @@
       }
       this.set_complete_relations();
     },
-    new_keyup: function(e) {
+    new_keypress: function(e) {
       if (e.keyCode == 9) {
         e.target.value = '';
       } else if (e.keyCode == 13) {
+        var vl = e.target.value.trim();
+        e.target.value = vl;
+        if (!vl) { return; }
+        if (!this.check_value(vl)) {
+          alert('Имя должно состоять только из букв и цифр и должно быть не короче 3 и не длиньше 50 символов');
+          return;
+        }
         this.build_item(e.target.value);
         e.target.value = '';
         e.stopPropagation();
@@ -88,6 +98,27 @@
       $target.addClass('selected');
       return false;
     },
+    dblclick: function(e) {
+      $(e.target).closest('li').addClass('editing').find('.edit').focus();
+    },
+    edit_out: function(e) {
+      if (e.keyCode && e.keyCode != 13) { return; }
+      var $target = $(e.target).closest('li').removeClass('editing');
+
+      var vl = e.target.value.trim();
+      e.target.value = vl;
+      if (!vl) { return; }
+      if (this.check_value(vl)) {
+        $target.find('.view label').html(vl);
+      } else {
+        e.target.value = $target.find('.view label').text();
+      }
+
+      if (e.keyCode && e.keyCode == 13) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
 
     build_item: function(name) {
       if (!name) { return; }
@@ -115,6 +146,10 @@
       }
       this.$todo_count.html(this.items_left);
       this.$toggle_all.prop('checked', this.items_left == 0);
+    },
+    check_value: function(value) {
+      var patt = /^[a-zA-Z0-9а-яА-Я\s]{3,50}$/g;
+      return patt.test(value);
     }
   };
 
